@@ -1,0 +1,226 @@
+"st the termguicolors
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+set nu
+syntax enable
+
+"Folding options for the files
+"set foldmethod=syntax
+set tabstop=4
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+
+"Highlight the line containing cursor
+set cursorline
+hi cursorline cterm=none term=none
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+highlight CursorLine guibg=#303000 ctermbg=234
+
+"General set of options
+"Vim would not auto detect file types
+filetype off
+"Let the plugin decide the indentation and let plugins decide the filetype I
+"am using
+filetype plugin indent on
+
+
+"Movement between buffers
+nnoremap <C-Right> :bnext<CR>
+nnoremap <C-Left> :bprev<CR>
+
+"Set up navigation to move between panes in nvim
+nnoremap <M-Down> <C-W>j
+nnoremap <M-Up> <C-W>k
+nnoremap <M-Right> <C-W>l
+nnoremap <M-Left> <C-W>h
+
+"Set mapleader key
+let mapleader=" "
+
+"Show file name
+nnoremap <Leader>sf :echo expand('%:p')<CR>
+
+"My Function Key Bindings
+
+"Indent the whole file
+map <F7> gg=G<C-o><C-o>
+nnoremap <C-A> ggVG
+"Toggle the tagbar
+nnoremap <M-g> :Telescope live_grep<CR>
+nnoremap <M-f> :Telescope find_files<CR>
+nnoremap <M-b> :Telescope buffers<CR>
+nnoremap <M-t> :TagbarToggle<CR>
+
+"Set the sign column whenever the language needs it
+set signcolumn=yes
+
+"How soon should the plugins trigger
+set updatetime=700
+
+"My Alt Key Bindings
+
+nnoremap <F12> :put=strftime('%a, %d %b %Y%n################')<CR>
+
+"get the right theme and background
+
+colorscheme gruvbox
+set background=dark
+let gruvbox_italic=1
+set termguicolors
+
+
+" Ignore case in search
+set ic
+" highlight searched items
+set hlsearch
+
+"Commenting productivity
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
+"Settings to move between buffers next and previous
+set hidden
+
+map <Leader>nf :NERDTreeToggle<CR>
+
+" have a fixed column for the diagnostics to appear in
+" this removes the jitter when warnings/errors flow in
+set signcolumn=yes
+
+" Set updatetime for CursorHold
+" 300ms of no cursor movement to trigger CursorHold
+set updatetime=300
+
+
+"Do word wrapping only in vimwiki files
+autocmd FileType vimwiki set wrap textwidth=80 formatoptions+=t wrapmargin=0 linebreak
+autocmd FileType rst set wrap textwidth=0 formatoptions+=t
+
+set formatoptions=crqto
+
+let g:diagnostic_enable_underline = 1
+
+
+"Settings related to fzf and ripgrep
+let g:fzf_layout = { 'down': '~25%' }
+
+
+
+"Get to the terminal
+nnoremap T :terminal<CR>
+
+
+"open current file in browser
+nnoremap <F12>f :exe ':silent !firefox %'<CR>
+
+"paste from clipboard
+nnoremap <Leader>v "+gP
+
+"set guifont
+set guifont=Monospace\ 11
+
+au bufreadpre,bufnewfile *.bnf set ft=bnf" 
+au bufreadpre,bufnewfile wiki setlocal textwidth=80" 
+
+
+abbr *[ * [ ]
+
+
+" set number relativenumber
+
+" augroup numbertoggle
+"   autocmd!
+"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+" augroup END
+
+
+" Fix auto-indentation for YAML files
+augroup yaml_fix
+    autocmd!
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
+augroup END
+
+" "This is to ensure that only the comments break at certain number of columns
+" augroup comment_textwidth
+"     autocmd!
+"     autocmd TextChanged,TextChangedI * :call AdjustTextWidth()
+" augroup END
+"
+" function! AdjustTextWidth()
+"     let syn_element = synIDattr(synID(line("."), col(".") - 1, 1), "name")
+"     let &textwidth = syn_element =~? 'comment' ? 72 : 79
+" endfunction
+
+
+" set cmdheight=2
+" let g:echodoc_enable_at_startup = 1
+" let g:echodoc_type = "signature"
+
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+
+let g:vimwiki_list = [{
+  \ 'path': '$HOME/vimwiki',
+  \ 'template_path': '~/.config/nvim/',
+  \ 'template_default': 'default',
+  \ 'template_ext': '.tpl'}]
+
+" Vim snippets configuration
+" NOTE: You can use other key to expand snippet.
+
+" Expand
+imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+
+" Expand or jump
+imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+
+" Jump forward or backward
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+" See https://github.com/hrsh7th/vim-vsnip/pull/50
+nmap        s   <Plug>(vsnip-select-text)
+xmap        s   <Plug>(vsnip-select-text)
+nmap        S   <Plug>(vsnip-cut-text)
+xmap        S   <Plug>(vsnip-cut-text)
+
+" If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
+let g:vsnip_filetypes = {}
+let g:vsnip_filetypes.javascriptreact = ['javascript']
+let g:vsnip_filetypes.typescriptreact = ['typescript']
+
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
