@@ -226,3 +226,5 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
 " let g:UltiSnipsExpandTrigger="<tab>"
 " let g:UltiSnipsJumpForwardTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let b:doge_doc_standard = 'google'
