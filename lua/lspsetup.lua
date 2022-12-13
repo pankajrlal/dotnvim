@@ -118,4 +118,4 @@ require('lspconfig')['html'].setup{}
 require'lspconfig'.volar.setup{
     filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
 }
-
+require("luasnip.loaders.from_vscode").lazy_load()

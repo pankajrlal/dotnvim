@@ -28,8 +28,10 @@ return require('packer').startup(
             'hrsh7th/nvim-cmp',
             config = function() require('config.cmp') end,
         }
-        use { 'SirVer/ultisnips' }
-        use { 'honza/vim-snippets'}
+        -- use { 'SirVer/ultisnips' }
+        -- use { 'honza/vim-snippets'}
+        use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
+        use {"rafamadriz/friendly-snippets"}
 
 		-- using buffer line. Gives a tabbed view to buffers on top of the window
 		use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
@@ -58,7 +60,6 @@ return require('packer').startup(
 		use { 'alvan/vim-closetag' }
 	
 		use { 'metakirby5/codi.vim' }
-		use "rafamadriz/friendly-snippets"
 
 		
 		 use {
