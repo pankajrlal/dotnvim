@@ -28,8 +28,8 @@ return require('packer').startup(
             'hrsh7th/nvim-cmp',
             config = function() require('config.cmp') end,
         }
-        -- use { 'SirVer/ultisnips' }
-        -- use { 'honza/vim-snippets'}
+        use { 'SirVer/ultisnips' }
+        use { 'honza/vim-snippets'}
 
 		-- using buffer line. Gives a tabbed view to buffers on top of the window
 		use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
