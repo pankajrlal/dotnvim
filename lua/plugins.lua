@@ -24,13 +24,31 @@ return require('packer').startup(
         use {'hrsh7th/cmp-buffer'}
         use {'hrsh7th/cmp-path'}
         use {'hrsh7th/cmp-nvim-lua'}
+
+        use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
         use {
             'hrsh7th/nvim-cmp',
-            config = function() require('config.cmp') end,
+            config = function ()
+                require'cmp'.setup {
+                    snippet = {
+                        expand = function(args)
+                            require'luasnip'.lsp_expand(args.body)
+                        end
+                    },
+
+                    sources = {
+                        { name = 'luasnip' },
+                        -- more sources
+                    },
+                }
+            end
         }
+        use { 'saadparwaiz1/cmp_luasnip' }
+
+
+
         -- use { 'SirVer/ultisnips' }
         -- use { 'honza/vim-snippets'}
-        use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
         use {"rafamadriz/friendly-snippets"}
 
 		-- using buffer line. Gives a tabbed view to buffers on top of the window
