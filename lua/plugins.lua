@@ -61,7 +61,8 @@ return require('packer').startup(
 		-- use { 'vimwiki/vimwiki'}
 
 		-- gitsigns
-		use { 'lewis6991/gitsigns.nvim' }
+		use { 'tpope/vim-fugitive' }
+        use {'tveskag/nvim-blame-line'}
 
 		-- Nerd Commenter
 		use { 'preservim/nerdcommenter' }
