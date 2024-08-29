@@ -108,7 +108,7 @@ let g:NERDToggleCheckAllLines = 1
 "Settings to move between buffers next and previous
 set hidden
 
-map <Leader>nf :NERDTreeToggle<CR>
+map <Leader>nf :NvimTreeOpen<CR>
 
 " have a fixed column for the diagnostics to appear in
 " this removes the jitter when warnings/errors flow in
@@ -144,7 +144,7 @@ nnoremap <F12>f :exe ':silent !firefox %'<CR>
 nnoremap <Leader>v "+gP
 
 "set guifont
-set guifont=Monospace\ 11
+"set guifont=Monospace\ 11
 
 au bufreadpre,bufnewfile *.bnf set ft=bnf" 
 au bufreadpre,bufnewfile wiki setlocal textwidth=80" 
@@ -155,11 +155,11 @@ abbr *[ * [ ]
 
 " set number relativenumber
 
-" augroup numbertoggle
-"   autocmd!
-"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-"   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-" augroup END
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 
 " Fix auto-indentation for YAML files
@@ -185,6 +185,13 @@ augroup END
 " let g:echodoc_type = "signature"
 
 "autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType rust call SetRustOptions()
+
+function SetRustOptions()
+    compiler cargo
+    nnoremap <F5> :make r<CR>
+    nnoremap <F7> :make c<CR>
+endfunction
 
 let g:vimwiki_list = [{
   \ 'path': '$HOME/vimwiki',
@@ -199,14 +206,12 @@ let g:vimwiki_list = [{
 " let g:UltiSnipsJumpForwardTrigger="<c-b>"
 " let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-let b:doge_doc_standard = 'google'
+augroup rust_docs
+    autocmd!
+    autocmd FileType rst let b:doge_doc_standard = 'rustdoc'
+augroup END
+" let b:doge_doc_standard = 'google'
 
-
-autocmd BufEnter * EnableBlameLine
-nnoremap <silent> <leader>B :ToggleBlameLine<CR>
-
-" Show blame info below the statusline instead of using virtual text
-let g:blameLineUseVirtualText = 0
 
 " Specify the highlight group used for the virtual text ('Comment' by default)
 let g:blameLineVirtualTextHighlight = 'Question'
@@ -220,3 +225,5 @@ let g:blameLineGitFormat = '%an - %s'
 
 " Change message when content is not committed
 let g:blameLineMessageWhenNotYetCommited = ''
+
+let g:rust_analyzer_diagnostics_enable = ["experimental"]
