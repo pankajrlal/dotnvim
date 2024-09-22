@@ -1,35 +1,10 @@
--- Setup for gruvbox theme
-require("gruvbox").setup({
-  terminal_colors = true, -- add neovim terminal colors
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = {
-    strings = true,
-    emphasis = true,
-    comments = true,
-    operators = false,
-    folds = true,
-  },
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
-})
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme catppuccin")
 
 -- Setup for lualine
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'gruvbox',
+    theme = 'catppuccin',
     component_separators = { left = '|', right = '|'},
     section_separators = { left = '*', right = '*'},
     disabled_filetypes = {
@@ -161,3 +136,102 @@ require("nvim-tree").setup({
     dotfiles = true,
   },
 })
+
+--  require("crates").setup()
+--
+--  require("crates.completion.cmp").setup()
+--
+--  require("actions-preview").setup {
+--   -- options for vim.diff(): https://neovim.io/doc/user/lua.html#vim.diff()
+--   diff = {
+--     ctxlen = 3,
+--   },
+--
+--   -- priority list of external command to highlight diff
+--   -- disabled by defalt, must be set by yourself
+--   highlight_command = {
+--     -- require("actions-preview.highlight").delta(),
+--     -- require("actions-preview.highlight").diff_so_fancy(),
+--     -- require("actions-preview.highlight").diff_highlight(),
+--   },
+--
+--   -- priority list of preferred backend
+--   backend = { "telescope", "nui" },
+--
+--   -- options related to telescope.nvim
+--   telescope = vim.tbl_extend(
+--     "force",
+--     -- telescope theme: https://github.com/nvim-telescope/telescope.nvim#themes
+--     require("telescope.themes").get_dropdown(),
+--     -- a table for customizing content
+--     {
+--       -- a function to make a table containing the values to be displayed.
+--       -- fun(action: Action): { title: string, client_name: string|nil }
+--       make_value = nil,
+--
+--       -- a function to make a function to be used in `display` of a entry.
+--       -- see also `:h telescope.make_entry` and `:h telescope.pickers.entry_display`.
+--       -- fun(values: { index: integer, action: Action, title: string, client_name: string }[]): function
+--       make_make_display = nil,
+--     }
+--   ),
+--
+--   -- options for nui.nvim components
+--   nui = {
+--     -- component direction. "col" or "row"
+--     dir = "col",
+--     -- keymap for selection component: https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/menu#keymap
+--     keymap = nil,
+--     -- options for nui Layout component: https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/layout
+--     layout = {
+--       position = "50%",
+--       size = {
+--         width = "60%",
+--         height = "90%",
+--       },
+--       min_width = 40,
+--       min_height = 10,
+--       relative = "editor",
+--     },
+--     -- options for preview area: https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup
+--     preview = {
+--       size = "60%",
+--       border = {
+--         style = "rounded",
+--         padding = { 0, 1 },
+--       },
+--     },
+--     -- options for selection area: https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/menu
+--     select = {
+--       size = "40%",
+--       border = {
+--         style = "rounded",
+--         padding = { 0, 1 },
+--       },
+--     },
+--   },
+-- }
+--
+-- local outline = require("outline")
+--
+-- outline.setup({
+--     server = {
+--         on_attach = function(_, bufnr)
+--             vim.keymap.set("n", "<Leader>o", outline.OutlineOpen, {buffer = bufnr})
+--         end,
+--     }
+-- })
+
+-- local rt = require("rust-tools")
+--
+-- rt.setup({
+--   server = {
+--     on_attach = function(_, bufnr)
+--       -- Hover actions
+--       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+--       -- Code action groups
+--       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+--     end,
+--   },
+-- })
+

@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/pankaj/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/pankaj/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/pankaj/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/pankaj/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/pankaj/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/home/pankaj/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?.lua;/home/pankaj/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?/init.lua;/home/pankaj/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?.lua;/home/pankaj/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/home/pankaj/.cache/nvim/packer_hererocks/2.1.1713484068/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -79,10 +79,21 @@ _G.packer_plugins = {
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["aerial.nvim"] = {
+    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vaerial\frequire\0" },
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/aerial.nvim",
+    url = "https://github.com/stevearc/aerial.nvim"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
+  },
+  catppuccin = {
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
   },
   ["cmp-buffer"] = {
     loaded = true,
@@ -99,20 +110,35 @@ _G.packer_plugins = {
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["cmp-nvim-lua"] = {
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua",
+    url = "https://github.com/hrsh7th/cmp-nvim-lua"
+  },
   ["cmp-path"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
+  },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
   ["codi.vim"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/codi.vim",
     url = "https://github.com/metakirby5/codi.vim"
   },
-  ["gitsigns.nvim"] = {
+  ["diffview.nvim"] = {
     loaded = true,
-    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
-    url = "https://github.com/lewis6991/gitsigns.nvim"
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/diffview.nvim",
+    url = "https://github.com/sindrets/diffview.nvim"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["gruvbox.nvim"] = {
     loaded = true,
@@ -139,16 +165,6 @@ _G.packer_plugins = {
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nerdcommenter",
     url = "https://github.com/preservim/nerdcommenter"
   },
-  nerdtree = {
-    loaded = true,
-    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nerdtree",
-    url = "https://github.com/preservim/nerdtree"
-  },
-  ["nvim-cmp"] = {
-    loaded = true,
-    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nvim-cmp",
-    url = "https://github.com/hrsh7th/nvim-cmp"
-  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
@@ -159,6 +175,11 @@ _G.packer_plugins = {
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nvim-tree-docs",
     url = "https://github.com/nvim-treesitter/nvim-tree-docs"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -167,7 +188,7 @@ _G.packer_plugins = {
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
-    url = "https://github.com/kyazdani42/nvim-web-devicons"
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -194,24 +215,23 @@ _G.packer_plugins = {
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/vim-doge",
     url = "https://github.com/kkoomen/vim-doge"
   },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
-  },
-  ["vim-vsnip"] = {
-    loaded = true,
-    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/vim-vsnip",
-    url = "https://github.com/hrsh7th/vim-vsnip"
-  },
-  ["vim-vsnip-integ"] = {
-    loaded = true,
-    path = "/home/pankaj/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ",
-    url = "https://github.com/hrsh7th/vim-vsnip-integ"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: aerial.nvim
+time([[Config for aerial.nvim]], true)
+try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vaerial\frequire\0", "config", "aerial.nvim")
+time([[Config for aerial.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

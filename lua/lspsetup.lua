@@ -1,6 +1,8 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.lsp.set_log_level("debug")
+local lspconfig = require('lspconfig')
+
+vim.lsp.set_log_level("info")
 require("luasnip.loaders.from_vscode").lazy_load()
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -32,10 +34,11 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', '<Leader>gr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, bufopts)
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end
 
 local cmp = require'cmp'
--- local luasnip = require'luasnip'
+local luasnip = require'luasnip'
 
 cmp.setup({
     window = {
@@ -69,15 +72,19 @@ cmp.setup({
         --   end
         -- end, { "i", "s" }),
     }),
-    sources = cmp.config.sources({
+    -- sources = cmp.config.sources({
+    --     {name ='nvim_lsp:rust-analyzer'},
+    --     {name ='buffer'},
+    --     {name ='luasnip'}
+    -- }
+    -- ),
+    sources = {
         {name ='nvim_lsp'},
         {name ='buffer'},
         {name ='luasnip'}
-    }
-    ),
+    },
     snippet = {
         expand = function(args)
-            local luasnip = require("luasnip")
             if not luasnip then
                 return
             end
@@ -113,7 +120,9 @@ cmp.setup.cmdline(':', {
 })
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+--local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 require('lspconfig')['pyright'].setup {
     capabilities = capabilities,
@@ -131,7 +140,7 @@ require('lspconfig')['pyright'].setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
-require('lspconfig')['rust_analyzer'].setup{
+lspconfig['rust_analyzer'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -190,16 +199,15 @@ require('lspconfig')['html'].setup{
     capabilities = capabilities,
 }
 -- If you are using mason.nvim, you can get the ts_plugin_path like this
-local mason_registry = require('mason-registry')
+-- local mason_registry = require('mason-registry')
 
-local lspconfig = require('lspconfig')
 require'lspconfig'.tsserver.setup{
   init_options = {
     plugins = {
       {
-        name = "@vue/typescript-plugin",
-        location = " ~/.bun/install/global/node_modules/@vue/typescript-plugin",
-        languages = {"javascript", "typescript", "vue"},
+	name = "@vue/typescript-plugin",
+	location = " ~/.bun/install/global/node_modules/@vue/typescript-plugin",
+	languages = {"javascript", "typescript", "vue"},
       },
     },
   },
@@ -218,4 +226,5 @@ lspconfig.volar.setup {}
      capabilities = capabilities,
      filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
 }
-require("luasnip.loaders.from_vscode").lazy_load()
+-- require("luasnip.loaders.from_vscode").lazy_load()
+require'lspconfig'.bashls.setup{}

@@ -69,9 +69,9 @@ nnoremap <F12> :put=strftime('%a, %d %b %Y%n################')<CR>
 
 "get the right theme and background
 
-colorscheme gruvbox
+"colorscheme gruvbox
 set background=dark
-let gruvbox_italic=1
+"let gruvbox_italic=1
 set termguicolors
 
 
