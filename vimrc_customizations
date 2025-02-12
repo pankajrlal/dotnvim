@@ -39,6 +39,7 @@ nnoremap <M-Down> <C-W>j
 nnoremap <M-Up> <C-W>k
 nnoremap <M-Right> <C-W>l
 nnoremap <M-Left> <C-W>h
+nnoremap <Leader>s <C-w><C-x>
 
 "Set mapleader key
 let mapleader=" "
@@ -56,6 +57,14 @@ nnoremap <M-g> :Telescope live_grep<CR>
 nnoremap <M-f> :Telescope find_files<CR>
 nnoremap <M-b> :Telescope buffers<CR>
 nnoremap <M-t> :TagbarToggle<CR>
+nnoremap <M-q> :Telescope quickfix<CR>
+nnoremap <M-r> :Telescope lsp_references<CR>
+nnoremap <M-d> :Telesecope lsp_definitons<CR>
+nnoremap <M-s> :Telescope lsp_document_symbols<CR>
+nnoremap <M-w> :Telescope lsp_workspace_symbols<CR>
+nnoremap <M-i> :Telescope lsp_incoming_calls<CR>
+nnoremap <M-o> :Telescope lsp_outgoing_calls<CR>
+
 
 "Set the sign column whenever the language needs it
 set signcolumn=yes

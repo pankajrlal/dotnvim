@@ -6,6 +6,8 @@ function(use)
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     -- Use telescope for all kinds of search across different files
     use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = {{'nvim-lua/plenary.nvim'}}}
+
+    use {'nvim-telescope/telescope-ui-select.nvim' }
     -- gruvbox theme
     use { "ellisonleao/gruvbox.nvim" }
 
@@ -38,22 +40,7 @@ function(use)
         -- install jsregexp (optional!:).
         run = "make install_jsregexp"
     })
-    use {
-        'hrsh7th/nvim-cmp',
-        -- config = function()
-        --     require'cmp'.setup {
-        --         snippet = {
-        --             expand = function(args)
-        --                 require'luasnip'.lsp_expand(args.body)
-        --             end
-        --         },
-        --         sources = {
-        --              { name = 'luasnip' },
-        --              -- more sources
-        --          },
-        --     }
-        -- end
-    }
+    use { 'hrsh7th/nvim-cmp'}
     use { 'saadparwaiz1/cmp_luasnip' }
 
 
@@ -90,10 +77,7 @@ function(use)
     use { 'metakirby5/codi.vim' }
 
 
-    use {
-        'stevearc/aerial.nvim',
-        config = function() require('aerial').setup() end
-    }
+    use { 'stevearc/aerial.nvim' }
     --
     -- use {
     --     'saecki/crates.nvim',
@@ -103,26 +87,27 @@ function(use)
     --         require('crates').setup()
     --     end
     -- }
-    -- use {
-    --     "aznhe21/actions-preview.nvim",
-    --     config = function()
-    --         vim.keymap.set({ "v", "n" }, "<Leader>b", require("actions-preview").code_actions)
-    --     end,
-    -- }
+    use {
+        "aznhe21/actions-preview.nvim",
+        config = function()
+            vim.keymap.set({ "v", "n" }, "<Leader>b", require("actions-preview").code_actions)
+        end,
+    }
+    use 'windwp/nvim-autopairs'
     -- use {
     --     'm4xshen/autoclose.nvim'
-    -- }
-    -- use {
-    --    "hedyhli/outline.nvim",
-    --    config = function ()
-    --     vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>",
-    --   {desc = "Toggle Outline" })
-    --    end
     -- }
 --    use 'simrat39/rust-tools.nvim'
 
     -- Debugging
 --  use 'nvim-lua/plenary.nvim'
 --    use 'mfussenegger/nvim-dap'
+
+    use 'AndrewRadev/splitjoin.vim'
+
+    use {
+        "stevearc/conform.nvim",
+    }
+    use 'nvim-telescope/telescope-media-files.nvim'
 end
 )

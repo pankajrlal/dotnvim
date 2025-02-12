@@ -34,6 +34,11 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', '<Leader>gr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, bufopts)
+    vim.keymap.set('n', '<Leader>lr', require('telescope.builtin').lsp_references)
+    vim.keymap.set('n', '<Leader>li', require('telescope.builtin').lsp_incoming_calls)
+    vim.keymap.set('n', '<Leader>lo', require('telescope.builtin').lsp_outgoing_calls)
+    vim.keymap.set('n', '<Leader>ls', require('telescope.builtin').lsp_document_symbols)
+    vim.keymap.set('n', '<M-q><M-f>', require('telescope.builtin').quickfix)
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 end
 
@@ -128,7 +133,15 @@ require('lspconfig')['pyright'].setup {
     capabilities = capabilities,
      on_attach = on_attach
 }
-require('aerial').setup({})
+require('aerial').setup({
+ -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+    vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+    vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+  end,
+})
 
 local lsp_flags = {
     -- This is the default in Nvim 0.7+
@@ -163,6 +176,11 @@ lspconfig['rust_analyzer'].setup{
             },
         }
     }
+}
+require('lspconfig')['texlab'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
 }
 require('lspconfig')['yamlls'].setup{
     on_attach = on_attach,
@@ -228,3 +246,7 @@ lspconfig.volar.setup {}
 }
 -- require("luasnip.loaders.from_vscode").lazy_load()
 require'lspconfig'.bashls.setup{}
+
+
+vim.keymap.set('n', '[', ':cnext<CR>')
+vim.keymap.set('n', ']', ':cprev<CR>')
