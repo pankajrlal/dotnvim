@@ -17,12 +17,12 @@ I use Mason to manage all the language server. packer installation should take c
 
 However once Mason is in shape, you will need to install specific language servers. The ones I am using are as follows
 
-gh 
-vue-language-server
-typescript-language-server
-html-lsp
-rust-analyzer
-lua-language-server
+* gh 
+* vue-language-server
+* typescript-language-server
+* html-lsp
+* rust-analyzer
+* lua-language-server
 
 Structurally
 
