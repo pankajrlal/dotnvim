@@ -219,7 +219,7 @@ require('lspconfig')['html'].setup{
 -- If you are using mason.nvim, you can get the ts_plugin_path like this
 -- local mason_registry = require('mason-registry')
 
-require'lspconfig'.tsserver.setup{
+require'lspconfig'.ts_ls.setup{
   init_options = {
     plugins = {
       {
