@@ -41,6 +41,84 @@ require('lualine').setup {
     extensions = {}
 }
 
+local dap = require("dap")
+local dapui = require("dapui")
+
+dapui.setup()
+
+dap.adapters.lldb = {
+    type = 'executable',
+    command = os.getenv('HOME') .. '/.local/share/nvim/debuggers/codelldb',
+    name = "lldb"
+}
+
+dap.configurations.rust = {
+    {
+        name = "Launch Rust App",
+        type = "lldb",
+        request = "launch",
+        program = function()
+            local cwd = vim.fn.getcwd()
+            local handle = io.popen("cargo metadata --format-version=1 | jq -r .packages[0].name")
+            if not handle then
+                    vim.notify("Error: Failed to run cargo metadata", vim.log.levels.ERROR)
+                    return nil
+            end
+            local result = handle:read("*a")
+            handle:close()
+
+            if not result or result == "" then
+                vim.notify("Error: Failed to retrieve binary name", vim.log.levels.ERROR)
+                return nil
+            end
+            local bin_name = result:gsub("\n", "")  -- Remove newline
+            return cwd .. "/target/debug/" .. bin_name
+        --    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/grp_server', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+        runInTerminal = false,
+    },
+    {
+        name = "Attach to Process",
+        type = "lldb",
+        request = "attach",
+        pid = function()
+            -- Ask the user for the process ID (PID)
+            return tonumber(vim.fn.input("Process ID (PID): "))
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    }
+}
+
+-- Automatically open dap-ui on debug
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+    dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+    dapui.close()
+end
+
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
+  },
+  signcolumn = true,  -- Show signs in the number column
+  numhl      = false, -- Highlight numbers
+  linehl     = false, -- Highlight changed lines
+  word_diff  = false, -- Highlight word diffs inside changed lines
+}
+
 vim.o.background = "dark"
 
 vim.cmd("colorscheme catppuccin")
@@ -324,4 +402,49 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
+-- Ufo (folding tool) configurations
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
+-- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+
+-- Option 2: nvim lsp as LSP client
+-- Tell the server the capability of foldingRange,
+-- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+for _, ls in ipairs(language_servers) do
+    require('lspconfig')[ls].setup({
+        capabilities = capabilities
+        -- you can add other fields for setting up lsp server in this table
+    })
+end
+require('ufo').setup()
+--
+
+-- Option 3: treesitter as a main provider instead
+-- (Note: the `nvim-treesitter` plugin is *not* needed.)
+-- ufo uses the same query files for folding (queries/<lang>/folds.scm)
+-- performance and stability are better than `foldmethod=nvim_treesitter#foldexpr()`
+require('ufo').setup({
+    provider_selector = function(bufnr, filetype, buftype)
+        return {'treesitter', 'indent'}
+    end
+})
+--
+
+-- Option 4: disable all providers for all buffers
+-- Not recommend, AFAIK, the ufo's providers are the best performance in Neovim
+require('ufo').setup({
+    provider_selector = function(bufnr, filetype, buftype)
+        return ''
+    end
+})

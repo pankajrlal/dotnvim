@@ -4,10 +4,15 @@ function(use)
     use 'wbthomason/packer.nvim'
     -- Use neovim treesitter for syntax highlighting
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+    use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     -- Use telescope for all kinds of search across different files
     use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = {{'nvim-lua/plenary.nvim'}}}
 
     use {'nvim-telescope/telescope-ui-select.nvim' }
+    
+    use {'github/copilot.vim' }
+
     -- gruvbox theme
     use { "ellisonleao/gruvbox.nvim" }
 
@@ -97,11 +102,17 @@ function(use)
     -- use {
     --     'm4xshen/autoclose.nvim'
     -- }
---    use 'simrat39/rust-tools.nvim'
-
     -- Debugging
 --  use 'nvim-lua/plenary.nvim'
---    use 'mfussenegger/nvim-dap'
+    use {
+        'mfussenegger/nvim-dap',
+         requires = {
+            "rcarriga/nvim-dap-ui",  -- UI for nvim-dap
+            "nvim-telescope/telescope-dap.nvim",  -- Telescope integration for DAP
+            "nvim-lua/plenary.nvim",
+            "nvim-neotest/nvim-nio"
+        }
+    }
 
     use 'AndrewRadev/splitjoin.vim'
 
@@ -109,5 +120,15 @@ function(use)
         "stevearc/conform.nvim",
     }
     use 'nvim-telescope/telescope-media-files.nvim'
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+
+    use {
+    'anurag3301/nvim-platformio.lua',
+    requires = {
+        {'akinsho/nvim-toggleterm.lua'},
+        {'nvim-telescope/telescope.nvim'},
+        {'nvim-lua/plenary.nvim'},
+    }
+}
 end
 )

@@ -182,6 +182,11 @@ require('lspconfig')['texlab'].setup{
     flags = lsp_flags,
     capabilities = capabilities,
 }
+require('lspconfig')['terraformls'].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+}
 require('lspconfig')['yamlls'].setup{
     on_attach = on_attach,
     flags = lsp_flags,
@@ -250,3 +255,8 @@ require'lspconfig'.bashls.setup{}
 
 vim.keymap.set('n', '[', ':cnext<CR>')
 vim.keymap.set('n', ']', ':cprev<CR>')
+
+require('platformio').setup({
+    lsp = "ccls" --default: ccls, other option: clangd
+                 -- If you pick clangd, it also creates compile_commands.json
+})
