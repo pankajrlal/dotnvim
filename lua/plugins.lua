@@ -11,13 +11,13 @@ function(use)
 
     use {'nvim-telescope/telescope-ui-select.nvim' }
     
-    use {'github/copilot.vim' }
+    -- use {'github/copilot.vim' }
 
     -- gruvbox theme
     use { "ellisonleao/gruvbox.nvim" }
 
     use { "catppuccin/nvim", as = "catppuccin" }
-
+    
 
     use { 'nvim-tree/nvim-web-devicons' }
     use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons', opt = true } }
@@ -120,15 +120,45 @@ function(use)
         "stevearc/conform.nvim",
     }
     use 'nvim-telescope/telescope-media-files.nvim'
-    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
+    -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
     use {
-    'anurag3301/nvim-platformio.lua',
-    requires = {
-        {'akinsho/nvim-toggleterm.lua'},
-        {'nvim-telescope/telescope.nvim'},
-        {'nvim-lua/plenary.nvim'},
+        'anurag3301/nvim-platformio.lua',
+        requires = {
+            {'akinsho/nvim-toggleterm.lua'},
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/plenary.nvim'},
+        }
     }
-}
+    use{
+      "olimorris/codecompanion.nvim",
+      config = function()
+        require("codecompanion").setup()
+      end,
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+      }
+    }
+  use {
+      "SmiteshP/nvim-navic",
+      requires = {
+          "neovim/nvim-lspconfig"
+      },
+      config = function()
+        require("nvim-navic").setup({
+          highlight = true,
+        })
+      end
+  }
+    use {
+      'greggh/claude-code.nvim',
+      requires = {
+        'nvim-lua/plenary.nvim', -- Required for git operations
+      },
+      config = function()
+        require('claude-code').setup()
+      end
+    }
 end
 )

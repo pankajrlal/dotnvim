@@ -1,7 +1,12 @@
 
+vim.opt.termguicolors = true
+
 -- Set completeopt to have a better completion experience. This was suggestged by nvim github copilot chat plugin
+
+
 vim.o.completeopt = "menu,menuone,noinsert,noselect,popup"
 
+vim.opt.splitright = true
 
 vim.cmd([[nnoremap <Leader>vr :source ~/.config/nvim/init.vim <CR>]])
 vim.cmd([[let mapleader = ' ']])

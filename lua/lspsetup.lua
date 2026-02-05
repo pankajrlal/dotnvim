@@ -1,8 +1,8 @@
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local lspconfig = require('lspconfig')
+local lspconfig = vim.lsp.config
 
-vim.lsp.set_log_level("info")
+-- vim.lsp.set_log_level("info")
 require("luasnip.loaders.from_vscode").lazy_load()
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -129,10 +129,12 @@ cmp.setup.cmdline(':', {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require('lspconfig')['pyright'].setup {
+vim.lsp.config('pyright', {
     capabilities = capabilities,
-     on_attach = on_attach
-}
+     on_attach = on_attach,
+     filetypes = { "python" }
+})
+
 require('aerial').setup({
  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
   on_attach = function(bufnr)
@@ -148,12 +150,14 @@ local lsp_flags = {
     debounce_text_changes = 150,
 }
 
-require('lspconfig')['pyright'].setup{
+vim.lsp.config('pyright',{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
-}
-lspconfig['rust_analyzer'].setup{
+})
+vim.lsp.enable('pyright')
+
+vim.lsp.config('rust_analyzer', {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
@@ -176,29 +180,34 @@ lspconfig['rust_analyzer'].setup{
             },
         }
     }
-}
-require('lspconfig')['texlab'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
-require('lspconfig')['terraformls'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
-require('lspconfig')['yamlls'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
-require('lspconfig')['html'].setup{
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = lsp_flags,
-}
+})
+vim.lsp.enable('rust_analyzer')
 
-require'lspconfig'.lua_ls.setup {
+vim.lsp.config('texlab', {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+})
+vim.lsp.enable('texlab')
+vim.lsp.config('terraformls', {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+})
+vim.lsp.enable('terraformls')
+vim.lsp.config('yamlls',{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+})
+vim.lsp.enable('yamlls')
+vim.lsp.config('html',{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = lsp_flags,
+})
+vim.lsp.enable('html')
+vim.lsp.config('lua_ls', {
     on_attach = on_attach,
     capabilities = capabilities,
     flags = lsp_flags,
@@ -209,22 +218,19 @@ require'lspconfig'.lua_ls.setup {
             }
         }
     }
-}
-require('lspconfig')['cssls'].setup{
+})
+vim.lsp.enable('lua_ls')
+vim.lsp.config('cssls', {
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 
-}
-require('lspconfig')['html'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-}
+})
+vim.lsp.enable('cssls')
 -- If you are using mason.nvim, you can get the ts_plugin_path like this
 -- local mason_registry = require('mason-registry')
 
-require'lspconfig'.ts_ls.setup{
+vim.lsp.config('ts_ls', {
   init_options = {
     plugins = {
       {
@@ -239,19 +245,20 @@ require'lspconfig'.ts_ls.setup{
     "typescript",
     "vue",
   },
-}
-
+})
+vim.lsp.enable('ts_ls')
 -- No need to set `hybridMode` to `true` as it's the default value
-lspconfig.volar.setup {}
- require('lspconfig').volar.setup{
+vim.lsp.config('volar', {
      on_attach = on_attach,
      flags = lsp_flags,
      capabilities = capabilities,
      filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-}
+})
+vim.lsp.enable('volar')
 -- require("luasnip.loaders.from_vscode").lazy_load()
-require'lspconfig'.bashls.setup{}
-
+-- require'lspconfig'.bashls.setup{}
+vim.lsp.config('bashls', {})
+vim.lsp.enable('bashls')
 
 vim.keymap.set('n', '[', ':cnext<CR>')
 vim.keymap.set('n', ']', ':cprev<CR>')

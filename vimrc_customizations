@@ -53,17 +53,18 @@ nnoremap <Leader>sf :echo expand('%:p')<CR>
 map <F7> gg=G<C-o><C-o>
 nnoremap <C-A> ggVG
 "Toggle the tagbar
-nnoremap <M-g> :Telescope live_grep<CR>
-nnoremap <M-f> :Telescope find_files<CR>
 nnoremap <M-b> :Telescope buffers<CR>
-nnoremap <M-t> :TagbarToggle<CR>
-nnoremap <M-q> :Telescope quickfix<CR>
-nnoremap <M-r> :Telescope lsp_references<CR>
 nnoremap <M-d> :Telesecope lsp_definitons<CR>
-nnoremap <M-s> :Telescope lsp_document_symbols<CR>
-nnoremap <M-w> :Telescope lsp_workspace_symbols<CR>
+nnoremap <M-e> :Telescope diagnostics<CR>
+nnoremap <M-f> :Telescope find_files<CR>
+nnoremap <M-g> :Telescope live_grep<CR>
 nnoremap <M-i> :Telescope lsp_incoming_calls<CR>
 nnoremap <M-o> :Telescope lsp_outgoing_calls<CR>
+nnoremap <M-q> :Telescope quickfix<CR>
+nnoremap <M-r> :Telescope lsp_references<CR>
+nnoremap <M-s> :Telescope lsp_document_symbols<CR>
+nnoremap <M-t> :TagbarToggle<CR>
+nnoremap <M-w> :Telescope lsp_workspace_symbols<CR>
 
 
 "Set the sign column whenever the language needs it
