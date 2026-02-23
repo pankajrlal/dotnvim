@@ -122,14 +122,14 @@ function(use)
     use 'nvim-telescope/telescope-media-files.nvim'
     -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
-    use {
-        'anurag3301/nvim-platformio.lua',
-        requires = {
-            {'akinsho/nvim-toggleterm.lua'},
-            {'nvim-telescope/telescope.nvim'},
-            {'nvim-lua/plenary.nvim'},
-        }
-    }
+    -- use {
+    --     'anurag3301/nvim-platformio.lua',
+    --     requires = {
+    --         {'akinsho/nvim-toggleterm.lua'},
+    --         {'nvim-telescope/telescope.nvim'},
+    --         {'nvim-lua/plenary.nvim'},
+    --     }
+    -- }
     use{
       "olimorris/codecompanion.nvim",
       config = function()

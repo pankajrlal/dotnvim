@@ -263,7 +263,7 @@ vim.lsp.enable('bashls')
 vim.keymap.set('n', '[', ':cnext<CR>')
 vim.keymap.set('n', ']', ':cprev<CR>')
 
-require('platformio').setup({
-    lsp = "ccls" --default: ccls, other option: clangd
-                 -- If you pick clangd, it also creates compile_commands.json
-})
+-- require('platformio').setup({
+--     lsp = "ccls" --default: ccls, other option: clangd
+--                  -- If you pick clangd, it also creates compile_commands.json
+-- })
