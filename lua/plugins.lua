@@ -41,7 +41,7 @@ require("lazy").setup({
   },
   {
     'akinsho/bufferline.nvim',
-    tag = '*',
+    version = '*',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
   },
 
@@ -62,7 +62,7 @@ require("lazy").setup({
   -- Snippets
   {
     'L3MON4D3/LuaSnip',
-    tag = 'v2.*',
+    version = 'v2.*',
     build = 'make install_jsregexp',
   },
   { 'rafamadriz/friendly-snippets' },
