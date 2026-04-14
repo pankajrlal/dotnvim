@@ -7,7 +7,7 @@ function(use)
 
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     -- Use telescope for all kinds of search across different files
-    use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = {{'nvim-lua/plenary.nvim'}}}
+    use { 'nvim-telescope/telescope.nvim', branch = 'master', requires = {{'nvim-lua/plenary.nvim'}}}
 
     use {'nvim-telescope/telescope-ui-select.nvim' }
     
@@ -55,8 +55,6 @@ function(use)
     -- using buffer line. Gives a tabbed view to buffers on top of the window
     -- use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
     use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
-    -- Generate documentation
-    use { 'nvim-treesitter/nvim-tree-docs' }
     -- Vimwiki installation
     -- use { 'vimwiki/vimwiki'}
 
@@ -122,14 +120,14 @@ function(use)
     use 'nvim-telescope/telescope-media-files.nvim'
     -- use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
-    use {
-        'anurag3301/nvim-platformio.lua',
-        requires = {
-            {'akinsho/nvim-toggleterm.lua'},
-            {'nvim-telescope/telescope.nvim'},
-            {'nvim-lua/plenary.nvim'},
-        }
-    }
+    -- use {
+    --     'anurag3301/nvim-platformio.lua',
+    --     requires = {
+    --         {'akinsho/nvim-toggleterm.lua'},
+    --         {'nvim-telescope/telescope.nvim'},
+    --         {'nvim-lua/plenary.nvim'},
+    --     }
+    -- }
     use{
       "olimorris/codecompanion.nvim",
       config = function()
@@ -151,7 +149,7 @@ function(use)
         })
       end
   }
-    use {
+  use {
       'greggh/claude-code.nvim',
       requires = {
         'nvim-lua/plenary.nvim', -- Required for git operations
@@ -159,6 +157,19 @@ function(use)
       config = function()
         require('claude-code').setup()
       end
-    }
+   }
+   use {
+      'milanglacier/minuet-ai.nvim',
+      requires = {
+          'nvim-lua/plenary.nvim',
+          'hrsh7th/nvim-cmp',       -- optional
+          'Saghen/blink.cmp',       -- optional
+      },
+      config = function()
+          require('minuet').setup {
+              -- Your configuration options here
+          }
+      end,
+  }
 end
 )

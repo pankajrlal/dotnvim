@@ -129,7 +129,7 @@ cmp.setup.cmdline(':', {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-vim.lsp.config('pyright', {
+vim.lsp.config('basedpyright', {
     capabilities = capabilities,
      on_attach = on_attach,
      filetypes = { "python" }
@@ -150,12 +150,12 @@ local lsp_flags = {
     debounce_text_changes = 150,
 }
 
-vim.lsp.config('pyright',{
+vim.lsp.config('basedpyright',{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,
 })
-vim.lsp.enable('pyright')
+vim.lsp.enable('basedpyright')
 
 vim.lsp.config('rust_analyzer', {
     on_attach = on_attach,
@@ -263,7 +263,7 @@ vim.lsp.enable('bashls')
 vim.keymap.set('n', '[', ':cnext<CR>')
 vim.keymap.set('n', ']', ':cprev<CR>')
 
-require('platformio').setup({
-    lsp = "ccls" --default: ccls, other option: clangd
-                 -- If you pick clangd, it also creates compile_commands.json
-})
+-- require('platformio').setup({
+--     lsp = "ccls" --default: ccls, other option: clangd
+--                  -- If you pick clangd, it also creates compile_commands.json
+-- })
