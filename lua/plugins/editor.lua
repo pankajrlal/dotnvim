@@ -52,6 +52,7 @@ return {
       end
 
       require('nvim-tree').setup({
+        git         = { ignore = false }, -- show git-ignored files in the tree
         diagnostics = { enable = true },
         sort        = { sorter = 'case_sensitive' },
         view        = { width = 50 },

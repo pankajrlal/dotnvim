@@ -6,6 +6,7 @@ vim.g.maplocalleader = ' '
 require('core.options')
 require('core.autocmds')
 require('core.keymaps')
+require('core.folding') -- treesitter + LSP foldingRange folds (see lua/core/folding.lua)
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
