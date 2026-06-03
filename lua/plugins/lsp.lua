@@ -227,6 +227,13 @@ return {
       -- Bash
       vim.lsp.config('bashls',      { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
       vim.lsp.enable('bashls')
+
+      -- Clang 
+      vim.lsp.config('clangd', {
+         cmd = { "clangd", "--background-index", "--header-insertion=never" },
+         filetypes = { "c", "cpp", "ino" }
+--         root_dir = util.root_pattern("compile_commands.json", "build.ninja", ".clangd", ".git")
+      })
     end,
   },
 }
