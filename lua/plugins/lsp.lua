@@ -153,6 +153,9 @@ return {
         flags        = lsp_flags,
         capabilities = capabilities,
         filetypes    = { 'python' },
+        -- basedpyright defaults to "recommended", which floods untyped code with
+        -- reportUnknown* warnings. Pin to "standard" (plain-pyright behaviour).
+        settings     = { basedpyright = { analysis = { typeCheckingMode = 'standard' } } },
       })
       vim.lsp.enable('basedpyright')
 
