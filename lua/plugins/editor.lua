@@ -74,6 +74,7 @@ return {
           },
         },
       })
+      telescope.load_extension('fzf') -- must load, or the C sorter is never swapped in
       telescope.load_extension('media_files')
       telescope.load_extension('ui-select')
     end,
