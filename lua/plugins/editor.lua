@@ -3,11 +3,60 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     branch       = 'master',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      -- Native C sorter. Without it Telescope falls back to the pure-Lua fuzzy
+      -- sorter, which re-scores every result on every keystroke.
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
     config = function()
       local telescope = require('telescope')
+
+      -- Skip the previewer for anything big enough to stall treesitter. The
+      -- repo has generated JSON scrip masters in the tens of MB on one line.
+      local previewers = require('telescope.previewers')
+      local max_preview_bytes = 256 * 1024
+      local function safe_previewer(filepath, bufnr, opts)
+        filepath = vim.fn.expand(filepath)
+        vim.uv.fs_stat(filepath, function(_, stat)
+          if not stat then return end
+          if stat.size > max_preview_bytes then
+            vim.schedule(function()
+              vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, { 'File too large to preview' })
+            end)
+            return
+          end
+          previewers.buffer_previewer_maker(filepath, bufnr, opts)
+        end)
+      end
+
       telescope.setup({
         defaults = {
+          -- Telescope's stock arguments, plus --max-columns. A single match in
+          -- a minified file otherwise hands Telescope one multi-MB string to
+          -- sort, highlight and render — on every keystroke of live_grep.
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--max-columns=200',
+            '--max-columns-preview',
+          },
+          buffer_previewer_maker = safe_previewer,
+          file_ignore_patterns = {
+            '%.git/',
+            'node_modules/',
+            '%.venv/',
+            'dist/',
+            '%.terraform/',
+            '%.db$',
+            '%.parquet$',
+            '%.lock$',
+          },
           mappings = {
             i = {
               ['<C-v>'] = require('telescope.actions').select_vertical,
