@@ -231,6 +231,28 @@ return {
       vim.lsp.config('bashls',      { on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
       vim.lsp.enable('bashls')
 
+      -- SQLMesh (sqlmesh_lsp). No nvim-lspconfig entry ships for it, so this is a
+      -- from-scratch config. `poetry run` resolves the per-project venv, and nvim
+      -- launches cmd with cwd = root_dir, which must be the SQLMesh project dir
+      -- (the one holding config.yaml + models/) -- SQLMesh resolves its state DB
+      -- relative to the working directory.
+      vim.lsp.config('sqlmesh', {
+        cmd          = { 'poetry', 'run', 'sqlmesh_lsp' },
+        filetypes    = { 'sql', 'python' },
+        on_attach    = on_attach,
+        flags        = lsp_flags,
+        capabilities = capabilities,
+        root_dir     = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local root  = vim.fs.root(fname, function(name, path)
+            return name == 'config.yaml'
+              and vim.uv.fs_stat(path .. '/models') ~= nil
+          end)
+          if root then on_dir(root) end
+        end,
+      })
+      vim.lsp.enable('sqlmesh')
+
       -- Clang 
       vim.lsp.config('clangd', {
          cmd = { "clangd", "--background-index", "--header-insertion=never" },
