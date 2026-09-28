@@ -106,7 +106,7 @@ return {
       dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- Or nvim-web-devicons
       ft = { "markdown" },
       opts = {
-        table = {
+        pipe_table = {
           enabled = true,
           style = 'full', -- 'full' draws top, bottom, and separator grid lines
           cell = 'padded', -- Ensures columns align cleanly using virtual text

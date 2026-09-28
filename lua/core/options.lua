@@ -29,14 +29,6 @@ opt.encoding      = 'utf-8'
 vim.g.loaded_netrw       = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Vimwiki
-vim.g.vimwiki_list = {{
-  path             = vim.env.HOME .. '/vimwiki',
-  template_path    = vim.fn.stdpath('config') .. '/',
-  template_default = 'default',
-  template_ext     = '.tpl',
-}}
-
 -- NERDCommenter
 vim.g.NERDSpaceDelims            = 1
 vim.g.NERDCompactSexyComs        = 1

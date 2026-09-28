@@ -31,6 +31,5 @@ Structurally
 * customizations.lua contains all my key bindings
 * vimrc_customizations are some legacy pieces that I should move to customizations.lua someday
 
-I have vim_plug just for vimiki as vimwiki seemed to not like packer and I haven't investigated why. 
 
 
