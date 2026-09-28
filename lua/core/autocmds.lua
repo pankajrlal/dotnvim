@@ -41,6 +41,21 @@ autocmd('FileType', {
   end,
 })
 
+-- Markdown: nowrap so render-markdown tables keep their grid (a table row is
+-- one source line; wrapping splits it). Set here rather than in the plugin's
+-- win_options, which re-applies on every render and would undo the toggle.
+autocmd('FileType', {
+  group    = augroup('MarkdownWrap', { clear = true }),
+  pattern  = 'markdown',
+  callback = function(ev)
+    vim.opt_local.wrap = false
+    vim.keymap.set('n', '<leader>uw', function()
+      vim.wo.wrap = not vim.wo.wrap
+      vim.notify('wrap ' .. (vim.wo.wrap and 'on' or 'off'))
+    end, { buffer = ev.buf, desc = 'Toggle wrap' })
+  end,
+})
+
 -- ── BNF filetype detection ────────────────────────────────────────────────────
 autocmd({ 'BufReadPre', 'BufNewFile' }, {
   pattern  = '*.bnf',
