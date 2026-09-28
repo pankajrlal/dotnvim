@@ -27,7 +27,17 @@ return {
       }
 
       -- Install asynchronously; no-op for parsers that are already present.
-      ts.install(ensure)
+      -- `main` compiles parsers with the tree-sitter CLI (>= 0.26.1, e.g.
+      -- `cargo install --locked tree-sitter-cli`). Without it every install
+      -- fails on each startup, so warn once and skip instead.
+      if vim.fn.executable('tree-sitter') == 1 then
+        ts.install(ensure)
+      else
+        vim.notify(
+          'tree-sitter CLI not found; skipping parser install (cargo install --locked tree-sitter-cli)',
+          vim.log.levels.WARN
+        )
+      end
 
       -- Turn on treesitter highlighting for any buffer whose filetype has a
       -- parser. pcall swallows the error for filetypes without one.
