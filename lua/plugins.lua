@@ -3,7 +3,16 @@ function(use)
     -- packer for itself
     use 'wbthomason/packer.nvim'
     -- Use neovim treesitter for syntax highlighting
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use { 
+        'nvim-treesitter/nvim-treesitter', 
+        run = ':TSUpdate',
+        config= function()
+                    require("nvim-treesitter.configs").setup {
+                        highlight = { enable = true },
+                        indent = { enable = true },
+                    }
+                end
+    }
 
     use { 'lewis6991/gitsigns.nvim', config = function() require('gitsigns').setup() end }
     -- Use telescope for all kinds of search across different files

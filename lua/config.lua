@@ -186,9 +186,9 @@ require("mason").setup()
 vim.opt.termguicolors = true
 require("bufferline").setup{}
 
-require "nvim-treesitter.configs".setup {
-    tree_docs = {enable = true}
-}
+-- require "nvim-treesitter.configs".setup {
+--     tree_docs = {enable = true}
+-- }
 require ("nvim-web-devicons").setup {
     -- your personnal icons can go here (to override)
     -- you can specify color or cterm_color instead of specifying both of them
