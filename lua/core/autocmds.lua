@@ -34,14 +34,6 @@ autocmd('FileType', {
 
 -- ── Filetype-specific prose settings ─────────────────────────────────────────
 autocmd('FileType', {
-  pattern  = 'vimwiki',
-  callback = function()
-    vim.opt_local.wrap      = true
-    vim.opt_local.textwidth = 80
-    vim.opt_local.linebreak = true
-  end,
-})
-autocmd('FileType', {
   pattern  = 'rst',
   callback = function()
     vim.opt_local.wrap      = true
