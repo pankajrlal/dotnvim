@@ -49,6 +49,33 @@ autocmd('FileType', {
   pattern  = 'markdown',
   callback = function(ev)
     vim.opt_local.wrap = false
+    -- Hard-wrap at 80 columns while typing (t), keeping numbered-list indent (n).
+    vim.opt_local.textwidth = 80
+    vim.opt_local.formatoptions:append('tn')
+
+    -- One sentence per line: a space typed right after . ? or ! becomes a
+    -- newline. Skipped for list markers ("1. "), table rows, inline code
+    -- (odd backtick count before the cursor) and fenced code blocks.
+    vim.keymap.set('i', '<Space>', function()
+      local before = vim.api.nvim_get_current_line():sub(1, vim.fn.col('.') - 1)
+      if not before:match('[%.%?!]$')
+        or before:match('^%s*%d+[.)]$')
+        or before:match('^%s*|')
+        or select(2, before:gsub('`', '')) % 2 == 1 then
+        return ' '
+      end
+      -- Reparse first: the tree is stale while typing.
+      local ok, node = pcall(function()
+        vim.treesitter.get_parser():parse()
+        return vim.treesitter.get_node()
+      end)
+      while ok and node do
+        if node:type() == 'fenced_code_block' then return ' ' end
+        node = node:parent()
+      end
+      return '<CR>'
+    end, { buffer = ev.buf, expr = true, desc = 'Break line after sentence' })
+
     vim.keymap.set('n', '<leader>uw', function()
       vim.wo.wrap = not vim.wo.wrap
       vim.notify('wrap ' .. (vim.wo.wrap and 'on' or 'off'))
