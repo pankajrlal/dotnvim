@@ -52,6 +52,46 @@ autocmd('FileType', {
     -- Hard-wrap at 80 columns while typing (t), keeping numbered-list indent (n).
     vim.opt_local.textwidth = 80
     vim.opt_local.formatoptions:append('tn')
+    -- The markdown ftplugin adds 'l', which exempts lines already longer than
+    -- textwidth from auto-wrap.
+    vim.opt_local.formatoptions:remove('l')
+    -- Auto-wrap only fires when the cursor is past textwidth; also re-wrap the
+    -- current line when typing earlier in an over-long line (tables and code
+    -- excluded). 'a' would do this but reflows the paragraph, rejoining the
+    -- sentence-per-line breaks below. The overflow line is tracked with an
+    -- extmark so later overflows reflow into it instead of each pushing one
+    -- word onto a fresh line.
+    local ns = vim.api.nvim_create_namespace('MarkdownWrapTail')
+    vim.api.nvim_create_autocmd('InsertLeave', {
+      buffer   = ev.buf,
+      callback = function() vim.api.nvim_buf_clear_namespace(ev.buf, ns, 0, -1) end,
+    })
+    vim.api.nvim_create_autocmd('TextChangedI', {
+      buffer   = ev.buf,
+      callback = function()
+        local line = vim.api.nvim_get_current_line()
+        if vim.fn.strdisplaywidth(line) <= vim.bo.textwidth or line:match('^%s*|') then return end
+        local ok, node = pcall(function()
+          vim.treesitter.get_parser():parse()
+          return vim.treesitter.get_node()
+        end)
+        while ok and node do
+          if node:type() == 'fenced_code_block' then return end
+          node = node:parent()
+        end
+        -- Reflow from the cursor line through the tracked tail, if below us.
+        local row   = vim.fn.line('.')            -- 1-based
+        local mark  = vim.api.nvim_buf_get_extmarks(ev.buf, ns, { row, 0 }, -1, { limit = 1 })[1]
+        local span  = mark and (mark[2] + 1 - row) or 0
+        local count = vim.fn.line('$')
+        vim.api.nvim_buf_clear_namespace(ev.buf, ns, 0, -1)
+        vim.cmd(span > 0 and ('normal! gw' .. span .. 'j') or 'normal! gww')
+        local last = row + span + vim.fn.line('$') - count
+        if last > row then
+          vim.api.nvim_buf_set_extmark(ev.buf, ns, last - 1, 0, {})
+        end
+      end,
+    })
 
     -- One sentence per line: a space typed right after . ? or ! becomes a
     -- newline. Skipped for list markers ("1. "), table rows, inline code
